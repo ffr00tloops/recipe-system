@@ -96,18 +96,20 @@ $res = mysqli_query($conn,$sql);
                 echo "<h1 class=\"bg-emerald-600 text-white p-3 rounded\">";
                 echo $row['title'];
                 echo "</h1>";
+                echo "<div class=\"m-3\">";
+                echo "<h1>";
+                echo $row['description'];
+                echo "</h1>";
+                echo "<button class=\"btn btn-primary bg-yellow-500 text-white rounded p-2 m-2\">";
+                echo "Edit Recipe";
+                echo "</button>";
+                echo "<button class=\"btn btn-primary bg-red-500 text-white rounded p-2 m-2\">";
+                echo "Delete Recipe";
+                echo "</button>";
+                echo "</div>";
                 echo "</div>";
             }        
             ?>
-            <div class="text-center m-3 shadow">
-                <h1 class="bg-emerald-600 text-white p-3 rounded">Chicken Alfredo</h1>
-                <div class="m-3">
-                    <h1>&#8226; Table Spoon of Shit</h1>
-                    <h1>&#8226; Teaspoon of cum</h1>
-                    <button class="btn btn-primary bg-yellow-500 text-white rounded p-2 m-2" name="recipelist">Edit Recipe</button> 
-                    <button class="btn btn-primary text-white bg-red-500 rounded p-2 m-2 " name="deleterecipes">Delete Recipe</button>
-                </div>
-            </div>
         </div>
     </div>
 </body>
