@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 function addRecipe() {
     header("location:addrecipe.php");
 }
@@ -36,7 +38,7 @@ function deleteAllRecipes() {
 
 }
 
-if(isset($_POST['deleterecipes'])) {
+if(isset($_POST['deleteallrecipes'])) {
     deleteAllRecipes();
 }
 
@@ -56,6 +58,14 @@ $sql = "SELECT * FROM recipes";
 $res = mysqli_query($conn,$sql);
 
 
+function editRecipes() {
+    header("Location: recipe.php");
+}
+
+
+if(isset($_POST['editrecipe'])) {
+    editRecipes();
+}
 ?>
 
 
@@ -69,6 +79,7 @@ $res = mysqli_query($conn,$sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Tracking System</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         
     </style>
@@ -82,34 +93,36 @@ $res = mysqli_query($conn,$sql);
             <form method="post">
                 <button class="btn btn-primary bg-cyan-500 rounded p-2 m-2" name="newrecipe">New Recipe</button>
                 <button class="btn btn-primary bg-emerald-500 rounded p-2 m-2" name="recipelist">Recipe List</button>
-                <button class="btn btn-primary bg-red-500 rounded p-2 m-2" name="deleterecipes">Delete All Recipes</button>
+                <button class="btn btn-primary bg-red-500 rounded p-2 m-2" name="deleteallrecipes">Delete All Recipes</button>
             </form>
         </button_container>
         <div class="border-t-2 rounded lg:flex lg:flex-between lg:justify-center">
+            <form method="post">
             <?php 
             while($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
                 $rows[] = $row;
             }
 
+            if (empty($rows)) {
+                echo "<h1>No Data</h1>";
+
+            } else {
             foreach($rows as $row) {
-                echo "<div class=\"text-center m-3 shadow\">";
-                echo "<h1 class=\"bg-emerald-600 text-white p-3 rounded\">";
-                echo $row['title'];
-                echo "</h1>";
-                echo "<div class=\"m-3\">";
-                echo "<h1>";
-                echo $row['description'];
-                echo "</h1>";
-                echo "<button class=\"btn btn-primary bg-yellow-500 text-white rounded p-2 m-2\">";
-                echo "Edit Recipe";
-                echo "</button>";
-                echo "<button class=\"btn btn-primary bg-red-500 text-white rounded p-2 m-2\">";
-                echo "Delete Recipe";
-                echo "</button>";
-                echo "</div>";
-                echo "</div>";
+                    echo "<div class=\"text-center m-3 shadow\">";
+                    echo "<h1 class=\"bg-emerald-600 text-white p-3 rounded\">";
+                    echo $row['title'];
+                    echo "</h1>";
+                    echo "<div class=\"m-3\">";
+                    echo "<p>";
+                    echo $row['description'];
+                    echo "</p>";
+                    echo "</div>";
+                    echo "</div>";
+
+                }
             }        
             ?>
+            </form>
         </div>
     </div>
 </body>
