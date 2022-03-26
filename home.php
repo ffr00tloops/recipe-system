@@ -66,6 +66,37 @@ function editRecipes() {
 if(isset($_POST['editrecipe'])) {
     editRecipes();
 }
+
+
+function deleteRecipe() {
+
+    $servername = "localhost";
+    $dbusername = "root";
+    $dbpassword = "";
+    $dbname = "recipesdb";
+
+    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+	$id_to_delete = mysqli_real_escape_string($conn , $_POST['id_to_delete']);
+
+	$sql = "DELETE FROM `recipes` WHERE recipeid = '$id_to_delete'";
+	if(mysqli_query($conn , $sql)){
+		//Success
+		header('Location: home.php');
+	}else{
+		//failure
+		echo 'query error: ' . mysqli_error($conn);
+	}
+}
+
+
+if(isset($_POST['deleterecipe'])) {
+    deleteRecipe();
+}
 ?>
 
 
@@ -113,10 +144,17 @@ if(isset($_POST['editrecipe'])) {
                     echo $row['title'];
                     echo "</h1>";
                     echo "<div class=\"m-3\">";
-                    echo "<p>";
+                    echo "<p class=\"text-justify\">";
                     echo $row['description'];
                     echo "</p>";
                     echo "</div>";
+                    echo "<input type=\"hidden\" name=\"id_to_delete\"";
+                    echo "value= ";
+                    echo $row['recipeid'];
+                    echo "></input>";
+                    echo "<button class=\"btn bg-red-500 p-2 m-2 text-white rounded\" name=\"deleterecipe\">";
+                    echo "Delete Recipe";
+                    echo "</button>";
                     echo "</div>";
 
                 }
