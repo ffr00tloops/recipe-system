@@ -127,8 +127,8 @@ if(isset($_POST['deleterecipe'])) {
                 <button class="btn btn-primary bg-red-500 rounded p-2 m-2" name="deleteallrecipes">Delete All Recipes</button>
             </form>
         </button_container>
+        <form method="post">
         <div class="border-t-2 rounded lg:flex lg:flex-between lg:justify-center">
-            <form method="post">
             <?php 
             while($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
                 $rows[] = $row;
@@ -160,8 +160,9 @@ if(isset($_POST['deleterecipe'])) {
                 }
             }        
             ?>
-            </form>
+            
         </div>
+        </form>
     </div>
 </body>
 </html>
